@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UI.AnimeWatch.AnimeWatch" />
+        <activity android:name=".UI.Options.Options"></activity>
     </application>
 
 </manifest>

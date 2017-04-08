@@ -1,6 +1,8 @@
 package com.example.marton.stephane.mobsoft_lab;
 
+import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatch;
 import com.example.marton.stephane.mobsoft_lab.UI.Main.MainActivity;
+import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
 import com.example.marton.stephane.mobsoft_lab.UI.UIModule;
 
 import javax.inject.Singleton;
@@ -15,5 +17,7 @@ import dagger.Component;
 @Component(modules = {UIModule.class})
 public interface MobSoftApplicationComponent {
     void inject(MainActivity mainActivity);
+    void inject(AnimeWatch mainActivity);
+    void inject(Options mainActivity);
 
 }
