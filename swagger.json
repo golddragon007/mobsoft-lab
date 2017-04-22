@@ -1,0 +1,268 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "AniDBComment API",
+        "description": "AniDB comment and login interface API",
+        "version": "0.1.0"
+    },
+    "host": "localhost",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "summary": "Login user",
+                "description": "Send user name and password, and the system will try to sign it.",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User name.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "User password.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User info.",
+                        "schema": {
+                            "$ref": "#/definitions/Profile"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments": {
+            "get": {
+                "summary": "Comments for a specific anime",
+                "description": "This will return all the comments for a specific Anime.",
+                "parameters": [
+                    {
+                        "name": "anime_id",
+                        "in": "query",
+                        "description": "Set the anime, which you want to get it's comments.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of comments",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Comment"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Edit specific Anime.",
+                "description": "Use this for edit an Anime.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Comment data.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Comment"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success edit."
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Create a new comment.",
+                "description": "This will a new comment for a specific Anime.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Comment data.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CommentWithoutId"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes create."
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete comment",
+                "description": "This will delete a specific comment.",
+                "parameters": [
+                    {
+                        "name": "comment_id",
+                        "in": "formData",
+                        "description": "Set the comment, which you want to delete.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete."
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Comment": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Comment's unique ID."
+                },
+                "anime_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Anime's ID."
+                },
+                "user_name": {
+                    "type": "string",
+                    "description": "User name who wrote the comment."
+                },
+                "comment": {
+                    "type": "string",
+                    "description": "User's comment to the Anime."
+                },
+                "time": {
+                    "type": "string",
+                    "description": "When was the comment sent."
+                }
+            }
+        },
+        "CommentWithoutId": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Comment's unique ID."
+                },
+                "anime_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Anime's ID."
+                },
+                "user_name": {
+                    "type": "string",
+                    "description": "User name who wrote the comment."
+                },
+                "comment": {
+                    "type": "string",
+                    "description": "User's comment to the Anime."
+                },
+                "time": {
+                    "type": "string",
+                    "description": "When was the comment sent."
+                }
+            }
+        },
+        "Profile": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "User id."
+                },
+                "username": {
+                    "type": "string",
+                    "description": "First name."
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email address."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
