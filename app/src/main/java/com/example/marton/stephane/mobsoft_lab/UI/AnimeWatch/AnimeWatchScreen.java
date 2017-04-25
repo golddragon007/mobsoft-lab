@@ -5,4 +5,5 @@ package com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch;
  */
 
 public interface AnimeWatchScreen {
+    void showMessage(String text);
 }

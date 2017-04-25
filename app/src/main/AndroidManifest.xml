@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.marton.stephane.mobsoft_lab">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".MobSoftApplication"
         android:allowBackup="true"
@@ -17,8 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.AnimeWatch.AnimeWatch" />
-        <activity android:name=".UI.Options.Options"></activity>
+        <activity android:name=".UI.AnimeWatch.AnimeWatch"
+            android:label="@string/app_name"
+            android:parentActivityName=".UI.Main.MainActivity" />
+        <activity android:name=".UI.Options.Options"
+            android:parentActivityName=".UI.Main.MainActivity"></activity>
+
+        <service android:name=".utils.BackgroundService" />
+
+        <receiver android:name=".utils.MyBroadcastReceiver">
+        <intent-filter>
+            <action android:name="com.example.marton.stephane.anidbapplication.NEW_HOT_ANIME">
+            </action>
+        </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

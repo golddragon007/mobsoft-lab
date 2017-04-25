@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 import static com.example.marton.stephane.mobsoft_lab.mock.interceptors.MockHelper.makeResponse;
 
-public class TodoMock {
+public class AnimeComments {
     public static Response process(Request request) {
         Uri uri = Uri.parse(request.url().toString());
 
@@ -21,13 +21,13 @@ public class TodoMock {
         Headers headers = request.headers();
 
 
-        if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "Todos") && request.method().equals("POST")) {
+        if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "comments") && request.method().equals("POST")) {
             responseString = "";
             responseCode = 200;
-        }else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "Todos") && request.method().equals("Get")) {
+        }else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "comments") && request.method().equals("Get")) {
             MemoryRepository memoryRepository = new MemoryRepository();
             memoryRepository.open(null);
-            responseString = GsonHelper.getGson().toJson(memoryRepository.getFavourites());
+            responseString = GsonHelper.getGson().toJson(memoryRepository.getAnimeListItems());
             responseCode = 200;
         } else {
             responseString = "ERROR";

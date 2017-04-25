@@ -7,7 +7,12 @@ import com.example.marton.stephane.mobsoft_lab.UI.Main.MainPresenter;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.OptionsPresenter;
 import com.example.marton.stephane.mobsoft_lab.UI.UIModule;
+import com.example.marton.stephane.mobsoft_lab.interactor.InteractorModule;
 import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.AnimeListItemsInteractor;
+import com.example.marton.stephane.mobsoft_lab.interactor.login.LoginInteractor;
+import com.example.marton.stephane.mobsoft_lab.network.NetworkModule;
+import com.example.marton.stephane.mobsoft_lab.repository.Repository;
+import com.example.marton.stephane.mobsoft_lab.repository.RepositoryModule;
 
 import javax.inject.Singleton;
 
@@ -18,7 +23,7 @@ import dagger.Component;
 
 
 @Singleton
-@Component(modules = {UIModule.class})
+@Component(modules = {UIModule.class, RepositoryModule.class, InteractorModule.class, NetworkModule.class})
 public interface MobSoftApplicationComponent {
     void inject(MobSoftApplication mobSoftApplication);
 
@@ -34,4 +39,5 @@ public interface MobSoftApplicationComponent {
 
 
     void inject(AnimeListItemsInteractor animeListItemsInteractor);
+    void inject(LoginInteractor loginInteractor);
 }

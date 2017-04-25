@@ -6,4 +6,6 @@ package com.example.marton.stephane.mobsoft_lab.UI.Main;
 
 public interface MainScreen {
     void showMessage(String text);
+    void onCacheSuccess(final Object obj);
+    void onCacheImageReady(String id);
 }

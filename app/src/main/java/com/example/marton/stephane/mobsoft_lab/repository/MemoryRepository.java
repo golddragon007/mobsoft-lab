@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class MemoryRepository implements Repository {
     private static final long MINUTE = 60 * 1000;
 
     public static List<AnimeListItem> animeListItems;
+    public static Profile profile;
 
     @Override
     public void open(Context context) {
@@ -53,6 +55,11 @@ public class MemoryRepository implements Repository {
     @Override
     public void removeAnimeListItem(AnimeListItem animeListItem) {
         animeListItems.remove(animeListItem);
+    }
+
+    @Override
+    public Profile Login() {
+        return profile;
     }
 
     @Override

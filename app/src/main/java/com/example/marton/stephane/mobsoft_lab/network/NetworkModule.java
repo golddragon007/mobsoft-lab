@@ -4,7 +4,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import com.example.marton.stephane.mobsoft_lab.network.todo.TodoApi;
+
+import com.example.marton.stephane.mobsoft_lab.network.Comments.CommentsApi;
+import com.example.marton.stephane.mobsoft_lab.network.User.UserApi;
 import com.example.marton.stephane.mobsoft_lab.utils.GsonHelper;
 import okhttp3.OkHttpClient;
 import retrofit2.GsonConverterFactory;
@@ -35,8 +37,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public TodoApi provideATodoApi(Retrofit retrofit) {
-        return retrofit.create(TodoApi.class);
+    public UserApi provideAUserApi(Retrofit retrofit) {
+        return retrofit.create(UserApi.class);
+    }
+
+    @Provides
+    @Singleton
+    public CommentsApi provideACommentsApi(Retrofit retrofit) {
+        return retrofit.create(CommentsApi.class);
     }
 
 

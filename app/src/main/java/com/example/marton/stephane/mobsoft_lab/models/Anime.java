@@ -36,8 +36,23 @@ public class Anime extends AnimeListItem {
         this.description = description;
     }
 
+    public Anime(String picURL, String id, String title, String eps, String startDate, String endDate, String ratingTemp, String ratingTempCount, String ratingPerm, String ratingPermCount, boolean restricted, String type, SimilarAnime[] similarAnimes, String description) {
+        super(picURL, id, title, eps, startDate, endDate, ratingTemp, ratingTempCount, ratingPerm, ratingPermCount, restricted);
+        this.type = type;
+        this.similarAnimes = similarAnimes;
+        this.description = description;
+    }
+
     public Anime(String picURL, String id, String title, String eps, String startDate, String endDate, String ratingTemp, String ratingTempCount, String ratingPerm, String ratingPermCount, boolean restricted, boolean favorite, String type, SimilarAnime[] similarAnimes, String description, Comment[] comments) {
         super(picURL, id, title, eps, startDate, endDate, ratingTemp, ratingTempCount, ratingPerm, ratingPermCount, restricted, favorite);
+        this.type = type;
+        this.similarAnimes = similarAnimes;
+        this.description = description;
+        this.comments = comments;
+    }
+
+    public Anime(String picURL, String id, String title, String eps, String startDate, String endDate, String ratingTemp, String ratingTempCount, String ratingPerm, String ratingPermCount, boolean restricted, String type, SimilarAnime[] similarAnimes, String description, Comment[] comments) {
+        super(picURL, id, title, eps, startDate, endDate, ratingTemp, ratingTempCount, ratingPerm, ratingPermCount, restricted);
         this.type = type;
         this.similarAnimes = similarAnimes;
         this.description = description;

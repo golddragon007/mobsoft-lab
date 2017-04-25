@@ -7,8 +7,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
+import com.example.marton.stephane.mobsoft_lab.network.Comments.CommentsApi;
 import com.example.marton.stephane.mobsoft_lab.network.NetworkModule;
-import com.example.marton.stephane.mobsoft_lab.network.todo.TodoApi;
+import com.example.marton.stephane.mobsoft_lab.network.User.UserApi;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,10 +51,14 @@ public class MockNetworkModule {
 
     @Provides
     @Singleton
-    public TodoApi provideAuthApi(Retrofit retrofit) {
-        return networkModule.provideATodoApi(retrofit);
+    public UserApi provideUserApi(Retrofit retrofit) {
+        return networkModule.provideAUserApi(retrofit);
     }
 
-
+    @Provides
+    @Singleton
+    public CommentsApi provideCommentsApi(Retrofit retrofit) {
+        return networkModule.provideACommentsApi(retrofit);
+    }
 
 }

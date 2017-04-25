@@ -1,7 +1,6 @@
 package com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events;
 
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
-import com.example.marton.stephane.mobsoft_lab.models.Todo;
 
 import java.util.List;
 

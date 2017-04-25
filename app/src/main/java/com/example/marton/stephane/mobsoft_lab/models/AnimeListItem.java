@@ -106,4 +106,18 @@ public class AnimeListItem {
         this.restricted = restricted;
         this.favorite = favorite;
     }
+
+    public AnimeListItem(String picURL, String id, String title, String eps, String startDate, String endDate, String ratingTemp, String ratingTempCount, String ratingPerm, String ratingPermCount, boolean restricted) {
+        this.picURL = picURL;
+        this.id = id;
+        this.title = title;
+        this.eps = eps;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.ratingTemp = ratingTemp;
+        this.ratingTempCount = ratingTempCount;
+        this.ratingPerm = ratingPerm;
+        this.ratingPermCount = ratingPermCount;
+        this.restricted = restricted;
+    }
 }

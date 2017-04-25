@@ -3,7 +3,7 @@ package com.example.marton.stephane.mobsoft_lab.repository;
 import android.content.Context;
 
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
-import com.example.marton.stephane.mobsoft_lab.models.Todo;
+import com.example.marton.stephane.mobsoft_lab.models.Profile;
 
 import java.util.List;
 
@@ -24,6 +24,8 @@ public interface Repository {
     void updateAnimeListItems(List<AnimeListItem> animeListItems);
 
     void removeAnimeListItem(AnimeListItem animeListItem);
+
+    Profile Login();
 
     boolean isInDB(AnimeListItem animeListItem);
 }

@@ -5,7 +5,6 @@ import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events.G
 import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events.RemoveAnimeListItemsEvent;
 import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events.SaveAnimeListItemsEvent;
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
 import com.example.marton.stephane.mobsoft_lab.repository.Repository;
 
 import java.util.List;
@@ -21,6 +20,8 @@ public class AnimeListItemsInteractor {
     Repository repository;
     @Inject
     EventBus bus;
+
+
 
     public AnimeListItemsInteractor() {
         MobSoftApplication.injector.inject(this);

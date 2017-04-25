@@ -29,7 +29,7 @@ public class MockInterceptor implements Interceptor {
 
 
         if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "Todos")) {
-            return TodoMock.process(request);
+            return AnimeComments.process(request);
         }
 
 

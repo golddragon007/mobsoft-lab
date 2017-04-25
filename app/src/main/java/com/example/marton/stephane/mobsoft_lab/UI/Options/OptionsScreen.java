@@ -5,4 +5,5 @@ package com.example.marton.stephane.mobsoft_lab.UI.Options;
  */
 
 public interface OptionsScreen {
+    void showMessage(String text);
 }

@@ -53,12 +53,6 @@ public class UIModule {
         return new OptionsPresenter();
     }
 
-    @Provides
-    @Singleton
-    public AnimeListItemsInteractor provideAnimeListItemsInteractor() {
-        return new AnimeListItemsInteractor();
-    }
-
 
     @Provides
     @Singleton

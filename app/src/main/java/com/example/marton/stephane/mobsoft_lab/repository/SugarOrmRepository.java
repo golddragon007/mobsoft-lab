@@ -3,6 +3,7 @@ package com.example.marton.stephane.mobsoft_lab.repository;
 import android.content.Context;
 
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.Profile;
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
 
@@ -52,6 +53,11 @@ public class SugarOrmRepository implements Repository {
     @Override
     public void removeAnimeListItem(AnimeListItem animeListItem) {
         SugarRecord.deleteInTx(animeListItem);
+    }
+
+    @Override
+    public Profile Login() {
+        return null;
     }
 
     @Override
