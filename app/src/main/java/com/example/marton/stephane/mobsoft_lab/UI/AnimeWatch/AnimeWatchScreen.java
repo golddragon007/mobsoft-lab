@@ -6,4 +6,6 @@ package com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch;
 
 public interface AnimeWatchScreen {
     void showMessage(String text);
+    void onCacheSuccess(Object object);
+    void onCacheImageReady(String id);
 }

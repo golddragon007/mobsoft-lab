@@ -47,8 +47,6 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_watch);
 
-        Intent intent = getIntent();
-        final String id = intent.getStringExtra("animeId");
 
         cover = (ImageView) this.findViewById(R.id.cover);
         title = (TextView) this.findViewById(R.id.title);
@@ -62,6 +60,16 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
         similarText = (TextView) this.findViewById(R.id.similarText);
         openInBrowser = (Button) this.findViewById(R.id.openInBrowser);
 
+        MobSoftApplication.injector.inject(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        animeWatchPresenter.attachScreen(this);
+        Intent intent = getIntent();
+        final String id = intent.getStringExtra("animeId");
+
         if (id.isEmpty()) {
             Toast.makeText(AnimeWatch.this, R.string.error_id_missing, Toast.LENGTH_LONG).show();
         }
@@ -73,16 +81,8 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
                     startActivity(browserIntent);
                 }
             });
-            StartDownload(id);
+            animeWatchPresenter.StartDownload(id, this);
         }
-
-        MobSoftApplication.injector.inject(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        animeWatchPresenter.attachScreen(this);
     }
 
     @Override
@@ -94,79 +94,55 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
 
     @Override
     public void showMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        if (!isFinishing()) {
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void StartDownload(String id) {
-        PrefFileName = "AniDBAppPrefs";
 
-        SharedPreferences settings = getSharedPreferences(PrefFileName, 0);
-        Boolean onlyWifiPref = settings.getBoolean("onlyWifi", false);
-        boolean downloadEnabled = Connectivity.isConnectedWifi(this) || !Connectivity.isConnectedWifi(this) && !onlyWifiPref;
-        CacheSystem cs = new CacheSystem(this, "anime", downloadEnabled, Connectivity.isConnected(this), new DatabaseController(this), id);
-        cs.setOnCacheListener(new CacheSystem.OnCacheListener() {
-            @Override
-            public void onCacheSuccess(final Object object) {
-                if (!isFinishing()) {
-                    if (object instanceof Anime) {
-                        Anime a = (Anime) object;
-                        imageUri = a.getPicURI();
-                        cover.setImageURI(imageUri);
-                        title.setText(a.getTitle());
-                        eps.setText(getString(R.string.episodes) + a.getFullEps());
-                        dates.setText(a.getDates());
-                        type.setText(a.getType());
-                        description.setText(a.getDescription());
-                        ratingPerm.setText(getString(R.string.permanent_rating) + a.getFullRatingPerm());
-                        ratingTemp.setText(getString(R.string.temporary_rating) + a.getFullRatingTemp());
+    public void onCacheSuccess(final Object object) {
+        if (!isFinishing()) {
+            if (object instanceof Anime) {
+                Anime a = (Anime) object;
+                imageUri = a.getPicURI();
+                cover.setImageURI(imageUri);
+                title.setText(a.getTitle());
+                eps.setText(getString(R.string.episodes) + a.getFullEps());
+                dates.setText(a.getDates());
+                type.setText(a.getType());
+                description.setText(a.getDescription());
+                ratingPerm.setText(getString(R.string.permanent_rating) + a.getFullRatingPerm());
+                ratingTemp.setText(getString(R.string.temporary_rating) + a.getFullRatingTemp());
 
-                        ArrayList<SimilarAnime> sa = new ArrayList<SimilarAnime>(Arrays.asList(a.getSimilarAnimes()));
+                ArrayList<SimilarAnime> sa = new ArrayList<SimilarAnime>(Arrays.asList(a.getSimilarAnimes()));
 
-                        if (!sa.isEmpty()) {
-                            similarText.setText(R.string.similar_anime);
-                        }
+                if (!sa.isEmpty()) {
+                    similarText.setText(R.string.similar_anime);
+                }
 
-                        adapter = new SimilarAnimeAdapter(sa);
+                adapter = new SimilarAnimeAdapter(sa);
 
-                        similarList.setAdapter(adapter);
-                        similarList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                SimilarAnime item = (SimilarAnime) adapter.getItem(position);
+                similarList.setAdapter(adapter);
+                similarList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        SimilarAnime item = (SimilarAnime) adapter.getItem(position);
 
-                                Intent intent = new Intent(AnimeWatch.this, AnimeWatch.class);
-                                intent.putExtra("animeId", item.getId());
-                                startActivity(intent);
-                            }
-                        });
+                        Intent intent = new Intent(AnimeWatch.this, AnimeWatch.class);
+                        intent.putExtra("animeId", item.getId());
+                        startActivity(intent);
                     }
-                }
+                });
             }
-
-            @Override
-            public void onCacheImageReady(final String id) {
-                if (!isFinishing()) {
-                    cover.setImageURI(null);
-                    cover.setImageURI(imageUri);
-                }
-            }
-
-            @Override
-            public void onNewHotAnime() {
-
-            }
-
-            @Override
-            public void onCacheFailed(final String message) {
-                if (!isFinishing()) {
-                    Toast.makeText(AnimeWatch.this, message, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        cs.start();
+        }
     }
 
+    public void onCacheImageReady(final String id) {
+        if (!isFinishing()) {
+            cover.setImageURI(null);
+            cover.setImageURI(imageUri);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

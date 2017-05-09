@@ -1,13 +1,27 @@
 package com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
+import com.example.marton.stephane.mobsoft_lab.R;
 import com.example.marton.stephane.mobsoft_lab.UI.Main.MainScreen;
 import com.example.marton.stephane.mobsoft_lab.UI.Presenter;
+import com.example.marton.stephane.mobsoft_lab.adapters.SimilarAnimeAdapter;
 import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.AnimeListItemsInteractor;
 import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events.GetAnimeListItemsEvent;
+import com.example.marton.stephane.mobsoft_lab.models.Anime;
 import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.SimilarAnime;
+import com.example.marton.stephane.mobsoft_lab.utils.CacheSystem;
+import com.example.marton.stephane.mobsoft_lab.utils.Connectivity;
+import com.example.marton.stephane.mobsoft_lab.utils.DatabaseController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -41,6 +55,38 @@ public class AnimeWatchPresenter extends Presenter<AnimeWatchScreen> {
     @Override
     public void detachScreen() {
         super.detachScreen();
+    }
+
+    public void StartDownload(String id, final AnimeWatch animeWatch) {
+        String PrefFileName = "AniDBAppPrefs";
+
+        SharedPreferences settings = animeWatch.getSharedPreferences(PrefFileName, 0);
+        Boolean onlyWifiPref = settings.getBoolean("onlyWifi", false);
+        boolean downloadEnabled = Connectivity.isConnectedWifi(animeWatch) || !Connectivity.isConnectedWifi(animeWatch) && !onlyWifiPref;
+        CacheSystem cs = new CacheSystem(animeWatch, "anime", downloadEnabled, Connectivity.isConnected(animeWatch), new DatabaseController(animeWatch), id);
+        cs.setOnCacheListener(new CacheSystem.OnCacheListener() {
+            @Override
+            public void onCacheSuccess(final Object object) {
+                animeWatch.onCacheSuccess(object);
+            }
+
+            @Override
+            public void onCacheImageReady(final String id) {
+                animeWatch.onCacheImageReady(id);
+            }
+
+            @Override
+            public void onNewHotAnime() {
+
+            }
+
+            @Override
+            public void onCacheFailed(final String message) {
+                animeWatch.showMessage(message);
+            }
+        });
+
+        cs.start();
     }
 
     public void getAnimeListItems() {

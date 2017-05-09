@@ -32,14 +32,14 @@
                 android:paddingLeft="10dp"
                 android:text="@string/title" />
 
-            <RatingBar
+            <!--RatingBar
                 android:id="@+id/ratingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
                 android:numStars="1"
                 android:stepSize="1"
-                android:visibility="visible" />
+                android:visibility="visible" /-->
         </LinearLayout>
 
         <TextView
