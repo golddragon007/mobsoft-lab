@@ -135,6 +135,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/openInBrowser" />
+
+        <com.example.marton.stephane.mobsoft_lab.utils.MyListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/comments"
+            android:scrollbars="none"/>
+
+        <TextView
+            android:text="@string/new_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newComment" />
+
+        <EditText
+            android:id="@+id/newCommentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textNoSuggestions" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
     </LinearLayout>
 
 </ScrollView>

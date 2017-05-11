@@ -52,19 +52,19 @@ public class CommentsInteractor {
         }
     }
 
-    public void updateComments(List<Comment> todo) {
+    public void updateComments(List<Comment> comments) {
         try {
-            repository.updateComments(todo);
+            repository.updateComments(comments);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void removeComments(Comment animeListItems) {
+    public void removeComments(Comment comment) {
         RemoveCommentsEvent event = new RemoveCommentsEvent();
-        event.setComments(animeListItems);
+        event.setComments(comment);
         try {
-            repository.removeComment(animeListItems);
+            repository.removeComment(comment);
             bus.post(event);
         } catch (Exception e) {
             event.setThrowable(e);

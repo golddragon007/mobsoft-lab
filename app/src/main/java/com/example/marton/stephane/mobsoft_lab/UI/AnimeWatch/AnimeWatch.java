@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 import com.example.marton.stephane.mobsoft_lab.MobSoftApplication;
 import com.example.marton.stephane.mobsoft_lab.R;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
+import com.example.marton.stephane.mobsoft_lab.adapters.CommentAdapter;
 import com.example.marton.stephane.mobsoft_lab.adapters.SimilarAnimeAdapter;
 import com.example.marton.stephane.mobsoft_lab.models.Anime;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
 import com.example.marton.stephane.mobsoft_lab.models.SimilarAnime;
 import com.example.marton.stephane.mobsoft_lab.utils.CacheSystem;
 import com.example.marton.stephane.mobsoft_lab.utils.Connectivity;
@@ -27,16 +30,19 @@ import com.example.marton.stephane.mobsoft_lab.utils.MyListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
     TextView title, eps, dates, type, description, ratingTemp, ratingPerm, similarText;
     ImageView cover;
-    MyListView similarList;
-    SimilarAnimeAdapter adapter;
-    Button openInBrowser;
+    MyListView similarList, commentsList;
+    SimilarAnimeAdapter similarAdapter;
+    CommentAdapter commentAdapter;
+    Button openInBrowser, saveComment;
     Uri imageUri;
+    EditText newCommentText;
     private String PrefFileName;
 
     @Inject
@@ -57,8 +63,11 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
         ratingPerm = (TextView) this.findViewById(R.id.ratingPerm);
         ratingTemp = (TextView) this.findViewById(R.id.ratingTemp);
         similarList = (MyListView) this.findViewById(R.id.similarList);
+        commentsList = (MyListView) this.findViewById(R.id.commentsList);
         similarText = (TextView) this.findViewById(R.id.similarText);
         openInBrowser = (Button) this.findViewById(R.id.openInBrowser);
+        saveComment = (Button) this.findViewById(R.id.saveComment);
+        newCommentText = (EditText) this.findViewById(R.id.newCommentText);
 
         MobSoftApplication.injector.inject(this);
     }
@@ -82,6 +91,7 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
                 }
             });
             animeWatchPresenter.StartDownload(id, this);
+            animeWatchPresenter.getComments(id);
         }
     }
 
@@ -120,13 +130,13 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
                     similarText.setText(R.string.similar_anime);
                 }
 
-                adapter = new SimilarAnimeAdapter(sa);
+                similarAdapter = new SimilarAnimeAdapter(sa);
 
-                similarList.setAdapter(adapter);
+                similarList.setAdapter(similarAdapter);
                 similarList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SimilarAnime item = (SimilarAnime) adapter.getItem(position);
+                        SimilarAnime item = (SimilarAnime) similarAdapter.getItem(position);
 
                         Intent intent = new Intent(AnimeWatch.this, AnimeWatch.class);
                         intent.putExtra("animeId", item.getId());
@@ -166,5 +176,13 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void receiveComments(ArrayList<Comment> comments) {
+        if (!isFinishing()) {
+            commentAdapter = new CommentAdapter(comments);
+
+            commentsList.setAdapter(commentAdapter);
+        }
     }
 }
