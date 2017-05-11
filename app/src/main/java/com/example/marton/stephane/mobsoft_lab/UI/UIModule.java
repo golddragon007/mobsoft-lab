@@ -2,12 +2,9 @@ package com.example.marton.stephane.mobsoft_lab.UI;
 
 import android.content.Context;
 
-import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatch;
 import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatchPresenter;
 import com.example.marton.stephane.mobsoft_lab.UI.Main.MainPresenter;
-import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.OptionsPresenter;
-import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.AnimeListItemsInteractor;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

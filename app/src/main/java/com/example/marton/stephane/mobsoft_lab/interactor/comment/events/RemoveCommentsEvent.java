@@ -1,18 +1,18 @@
-package com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.events;
+package com.example.marton.stephane.mobsoft_lab.interactor.comment.events;
 
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
 
-public class RemoveAnimeListItemsEvent {
+public class RemoveCommentsEvent {
     private int code;
-    private AnimeListItem animeListItems;
+    private Comment animeListItems;
     private Throwable throwable;
 
     //<editor-fold desc="Constructors|Getters|Setters">
 
-    public RemoveAnimeListItemsEvent() {
+    public RemoveCommentsEvent() {
     }
 
-    public RemoveAnimeListItemsEvent(int code, AnimeListItem animeListItems, Throwable throwable) {
+    public RemoveCommentsEvent(int code, Comment animeListItems, Throwable throwable) {
         this.code = code;
         this.animeListItems = animeListItems;
         this.throwable = throwable;
@@ -26,11 +26,11 @@ public class RemoveAnimeListItemsEvent {
         this.code = code;
     }
 
-    public AnimeListItem getAnimeListItems() {
+    public Comment getComments() {
         return animeListItems;
     }
 
-    public void setAnimeListItems(AnimeListItem animeListItems) {
+    public void setComments(Comment animeListItems) {
         this.animeListItems = animeListItems;
     }
 

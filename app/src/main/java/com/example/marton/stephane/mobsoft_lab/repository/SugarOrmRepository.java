@@ -2,7 +2,7 @@ package com.example.marton.stephane.mobsoft_lab.repository;
 
 import android.content.Context;
 
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
 import com.example.marton.stephane.mobsoft_lab.models.Profile;
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
@@ -27,22 +27,32 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public List<AnimeListItem> getAnimeListItems() {
-        return SugarRecord.listAll(AnimeListItem.class);
+    public List<Comment> getComments(String animeId) {
+        List<Comment> comments = new ArrayList<>();
+        List<Comment> allComment = SugarRecord.listAll(Comment.class);
+
+        for (int i = 0; i < allComment.size(); i++) {
+            Comment comment = allComment.get(i);
+            if (comment.getAnimeId().equals(animeId)) {
+                comments.add(comment);
+            }
+        }
+
+        return comments;
     }
 
     @Override
-    public void saveAnimeListItem(AnimeListItem animeListItem) {
-        SugarRecord.saveInTx(animeListItem);
+    public void saveComment(Comment comment) {
+        SugarRecord.saveInTx(comment);
     }
 
     @Override
-    public void updateAnimeListItems(List<AnimeListItem> animeListItems) {
-        List<AnimeListItem> favourites = getAnimeListItems();
-        List<AnimeListItem> toUpdate = new ArrayList<>(favourites.size());
-        for (AnimeListItem favourite : favourites) {
-            for (AnimeListItem todo : animeListItems) {
-                if (todo.getId().equals(favourite.getId())) {
+    public void updateComments(List<Comment> comments) {
+        List<Comment> favourites = SugarRecord.listAll(Comment.class);
+        List<Comment> toUpdate = new ArrayList<>(favourites.size());
+        for (Comment favourite : favourites) {
+            for (Comment todo : comments) {
+                if (todo.getCommentId().equals(favourite.getCommentId())) {
                     toUpdate.add(todo);
                 }
             }
@@ -51,8 +61,8 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public void removeAnimeListItem(AnimeListItem animeListItem) {
-        SugarRecord.deleteInTx(animeListItem);
+    public void removeComment(Comment comment) {
+        SugarRecord.deleteInTx(comment);
     }
 
     @Override
@@ -61,7 +71,7 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public boolean isInDB(AnimeListItem animeListItem) {
-        return SugarRecord.findById(AnimeListItem.class, animeListItem.getIdAsLong()) != null;
+    public boolean isInDB(Comment comment) {
+        return SugarRecord.findById(Comment.class, Integer.parseInt(comment.getCommentId())) != null;
     }
 }

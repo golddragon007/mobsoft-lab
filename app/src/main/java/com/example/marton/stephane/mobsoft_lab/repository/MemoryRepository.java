@@ -2,11 +2,13 @@ package com.example.marton.stephane.mobsoft_lab.repository;
 
 import android.content.Context;
 
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
+import com.example.marton.stephane.mobsoft_lab.models.Comment;
 import com.example.marton.stephane.mobsoft_lab.models.Profile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,12 +18,16 @@ import java.util.List;
 public class MemoryRepository implements Repository {
     private static final long MINUTE = 60 * 1000;
 
-    public static List<AnimeListItem> animeListItems;
+    public static List<Comment> comments;
     public static Profile profile;
 
     @Override
     public void open(Context context) {
-        animeListItems = new ArrayList<>();
+        comments = new ArrayList<>();
+        profile = new Profile();
+        profile.setEmail("somebody@somewhere.now");
+        profile.setId(1);
+        profile.setUsername("Me");
     }
 
     @Override
@@ -30,31 +36,40 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public List<AnimeListItem> getAnimeListItems() {
-        return animeListItems;
+    public List<Comment> getComments(String animeId) {
+        List<Comment> animeComments = new ArrayList<>();
+
+        for (int i = 0; i < comments.size(); i++) {
+            Comment currentComment = comments.get(i);
+            if (currentComment.getAnimeId().equals(animeId)) {
+                animeComments.add(currentComment);
+            }
+        }
+
+        return animeComments;
     }
 
     @Override
-    public void saveAnimeListItem(AnimeListItem animeListItem) {
-        animeListItems.add(animeListItem);
+    public void saveComment(Comment comment) {
+        comments.add(comment);
 
     }
 
     @Override
-    public void updateAnimeListItems(List<AnimeListItem> animeListItems) {
-        for (int i = 0; i < this.animeListItems.size(); i++) {
-            AnimeListItem favourite = this.animeListItems.get(i);
-            for (AnimeListItem animeListItem : animeListItems) {
-                if (animeListItem.getId().equals(favourite.getId())) {
-                    this.animeListItems.set(i, animeListItem);
+    public void updateComments(List<Comment> commentsUpdate) {
+        for (int i = 0; i < comments.size(); i++) {
+            Comment favourite = comments.get(i);
+            for (Comment comment : commentsUpdate) {
+                if (comment.getCommentId().equals(favourite.getCommentId())) {
+                    comments.set(i, comment);
                 }
             }
         }
     }
 
     @Override
-    public void removeAnimeListItem(AnimeListItem animeListItem) {
-        animeListItems.remove(animeListItem);
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 
     @Override
@@ -63,7 +78,7 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public boolean isInDB(AnimeListItem flight) {
-        return animeListItems.contains(flight);
+    public boolean isInDB(Comment comment) {
+        return comments.contains(comment);
     }
 }

@@ -8,10 +8,9 @@ import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.OptionsPresenter;
 import com.example.marton.stephane.mobsoft_lab.UI.UIModule;
 import com.example.marton.stephane.mobsoft_lab.interactor.InteractorModule;
-import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.AnimeListItemsInteractor;
+import com.example.marton.stephane.mobsoft_lab.interactor.comment.CommentsInteractor;
 import com.example.marton.stephane.mobsoft_lab.interactor.login.LoginInteractor;
 import com.example.marton.stephane.mobsoft_lab.network.NetworkModule;
-import com.example.marton.stephane.mobsoft_lab.repository.Repository;
 import com.example.marton.stephane.mobsoft_lab.repository.RepositoryModule;
 
 import javax.inject.Singleton;
@@ -38,6 +37,6 @@ public interface MobSoftApplicationComponent {
     void inject(Options options);
 
 
-    void inject(AnimeListItemsInteractor animeListItemsInteractor);
+    void inject(CommentsInteractor CommentsInteractor);
     void inject(LoginInteractor loginInteractor);
 }

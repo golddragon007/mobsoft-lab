@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.marton.stephane.mobsoft_lab.MobSoftApplication;
@@ -32,7 +33,8 @@ public class Options extends AppCompatActivity implements OptionsScreen {
 
     CheckBox onlyWifi;
     String PrefFileName;
-    Button backButton, cacheDelete;
+    Button backButton, cacheDelete, testLoginButton;
+    EditText username, password;
 
     @Inject
     OptionsPresenter optionsPresenter;
@@ -50,6 +52,9 @@ public class Options extends AppCompatActivity implements OptionsScreen {
         onlyWifi = (CheckBox) findViewById(R.id.only_wifi);
         backButton = (Button) findViewById(R.id.back);
         cacheDelete = (Button) findViewById(R.id.cache_delete);
+        testLoginButton = (Button) findViewById(R.id.login);
+        username = (EditText) findViewById(R.id.name);
+        password = (EditText) findViewById(R.id.password);
 
         final Options options = this;
 
@@ -82,6 +87,12 @@ public class Options extends AppCompatActivity implements OptionsScreen {
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+            }
+        });
+        testLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

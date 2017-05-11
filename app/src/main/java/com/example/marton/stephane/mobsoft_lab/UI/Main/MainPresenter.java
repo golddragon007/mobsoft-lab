@@ -1,23 +1,13 @@
 package com.example.marton.stephane.mobsoft_lab.UI.Main;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.marton.stephane.mobsoft_lab.R;
-import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatch;
 import com.example.marton.stephane.mobsoft_lab.UI.Presenter;
-import com.example.marton.stephane.mobsoft_lab.adapters.AnimeListItemAdapter;
-import com.example.marton.stephane.mobsoft_lab.interactor.animelistitem.AnimeListItemsInteractor;
-import com.example.marton.stephane.mobsoft_lab.models.AnimeListItem;
+import com.example.marton.stephane.mobsoft_lab.interactor.comment.CommentsInteractor;
 import com.example.marton.stephane.mobsoft_lab.utils.CacheSystem;
 import com.example.marton.stephane.mobsoft_lab.utils.Connectivity;
 import com.example.marton.stephane.mobsoft_lab.utils.DatabaseController;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
@@ -31,7 +21,7 @@ import de.greenrobot.event.EventBus;
 public class MainPresenter extends Presenter<MainScreen> {
 
     @Inject
-    AnimeListItemsInteractor animeListItemsInteractor;
+    CommentsInteractor commentsInteractor;
 
     @Inject
     Executor executor;
