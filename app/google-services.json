@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "704328885243",
+    "project_id": "bme-test-app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704328885243:android:b65272959085a36e",
+        "android_client_info": {
+          "package_name": "com.example.marton.stephane.mobsoft_lab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaK0ZrMjgMmSbjnNvOA8AETXMoh0C7Tvc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-99116360-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.marton.stephane.mobsoft_lab.MobSoftApplication;
 import com.example.marton.stephane.mobsoft_lab.R;
 import com.example.marton.stephane.mobsoft_lab.UI.Options.Options;
@@ -27,12 +28,16 @@ import com.example.marton.stephane.mobsoft_lab.utils.CacheSystem;
 import com.example.marton.stephane.mobsoft_lab.utils.Connectivity;
 import com.example.marton.stephane.mobsoft_lab.utils.DatabaseController;
 import com.example.marton.stephane.mobsoft_lab.utils.MyListView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.fabric.sdk.android.Fabric;
 
 public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
     TextView title, eps, dates, type, description, ratingTemp, ratingPerm, similarText;
@@ -47,6 +52,11 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
 
     @Inject
     AnimeWatchPresenter animeWatchPresenter;
+
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +79,20 @@ public class AnimeWatch extends AppCompatActivity implements AnimeWatchScreen {
         saveComment = (Button) this.findViewById(R.id.saveComment);
         newCommentText = (EditText) this.findViewById(R.id.newCommentText);
 
+        // Obtain the shared Tracker instance.
+        MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
+        Fabric.with(this, new Crashlytics());
+
         MobSoftApplication.injector.inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Image~AnimeWatch");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

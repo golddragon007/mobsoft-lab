@@ -47,4 +47,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_cache" />
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Force Crash!"
+        android:onClick="forceCrash"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </LinearLayout>

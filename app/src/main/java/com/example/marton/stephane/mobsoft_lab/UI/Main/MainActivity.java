@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.marton.stephane.mobsoft_lab.MobSoftApplication;
 import com.example.marton.stephane.mobsoft_lab.R;
 import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatch;
@@ -27,10 +28,14 @@ import com.example.marton.stephane.mobsoft_lab.utils.BackgroundService;
 import com.example.marton.stephane.mobsoft_lab.utils.CacheSystem;
 import com.example.marton.stephane.mobsoft_lab.utils.Connectivity;
 import com.example.marton.stephane.mobsoft_lab.utils.DatabaseController;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements MainScreen {
 
@@ -47,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     @Inject
     MainPresenter mainPresenter;
+
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     /**
      * Checks if the app has permission to write to device storage
@@ -85,7 +95,20 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Obtain the shared Tracker instance.
+        MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
+        Fabric.with(this, new Crashlytics());
+
         MobSoftApplication.injector.inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Image~MainActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

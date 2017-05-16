@@ -20,14 +20,19 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.marton.stephane.mobsoft_lab.MobSoftApplication;
 import com.example.marton.stephane.mobsoft_lab.R;
 import com.example.marton.stephane.mobsoft_lab.UI.AnimeWatch.AnimeWatchPresenter;
 import com.example.marton.stephane.mobsoft_lab.UI.Main.MainActivity;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 
 import javax.inject.Inject;
+
+import io.fabric.sdk.android.Fabric;
 
 public class Options extends AppCompatActivity implements OptionsScreen {
 
@@ -39,6 +44,11 @@ public class Options extends AppCompatActivity implements OptionsScreen {
     @Inject
     OptionsPresenter optionsPresenter;
 
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +56,7 @@ public class Options extends AppCompatActivity implements OptionsScreen {
 
         MobSoftApplication.injector.inject(this);
 
+        Fabric.with(this, new Crashlytics());
 
         PrefFileName = "AniDBAppPrefs";
 
@@ -57,6 +68,10 @@ public class Options extends AppCompatActivity implements OptionsScreen {
         password = (EditText) findViewById(R.id.password);
 
         final Options options = this;
+
+        // Obtain the shared Tracker instance.
+        MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +134,9 @@ public class Options extends AppCompatActivity implements OptionsScreen {
     protected void onResume() {
         super.onResume();
 
+        mTracker.setScreenName("Image~Options");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         SharedPreferences settings = getSharedPreferences(PrefFileName, 0);
         Boolean onlyWifiPref = settings.getBoolean("onlyWifi", false);
 
@@ -156,4 +174,9 @@ public class Options extends AppCompatActivity implements OptionsScreen {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
 }
